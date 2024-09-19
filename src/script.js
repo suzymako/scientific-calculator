@@ -10,7 +10,16 @@ document.addEventListener("DOMContentLoaded", function(){
         const converted_value = current_value
             .replace("×", "*")
             .replace("÷", "/")
-            .replace("%", "*0.01");
+            .replace("%", "*0.01")
+            .replace("sin", "Math.sin")
+            .replace("cos", "Math.cos")
+            .replace("ln", "Math.log")
+            .replace("π", "Math.PI")
+            .replace("log", "Math.log10")
+            .replace("e", "Math.E")
+            .replace("tan", "Math.tan")
+            .replace("√", "Math.sqrt");
+
         const result = eval(converted_value);
         current_value = result.toString();
         display.value = current_value;
@@ -22,14 +31,22 @@ document.addEventListener("DOMContentLoaded", function(){
              
             const value = button.innerText;
 
-            if(value == "AC"){
-                current_value = "";
-                display.value = current_value;
-            }else if (value == "=") {
-                evaluateResult();
-            } else {
-                current_value += value;
-                display.value = current_value;
+            try {
+
+                if(value == "AC"){
+                    current_value = "";
+                    display.value = current_value;
+                }else if (value == "=") {
+                    evaluateResult();
+                } else {
+                    current_value += value;
+                    display.value = current_value;
+                }
+                
+            } catch (error) {
+                console.error(error);
+                current_value = "ERROR";
+                display.value = current_value;                
             }
         });
     }
